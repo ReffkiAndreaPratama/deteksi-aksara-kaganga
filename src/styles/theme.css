@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════════════
+   VisionClassify — Global Theme
+   Dark glassmorphism + purple/teal accent
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* ── Root Variables ── */
+:root {
+  --primary:      #6C63FF;
+  --primary-dark: #5A52E0;
+  --secondary:    #3ECFCF;
+  --accent:       #FF6584;
+  --success:      #4CAF50;
+  --warning:      #FF9800;
+  --danger:       #F44336;
+  --bg-base:      #0F0F1A;
+  --bg-surface:   #1A1A2E;
+  --bg-card:      #16213E;
+  --bg-glass:     rgba(255,255,255,0.04);
+  --border:       rgba(108,99,255,0.2);
+  --border-hover: rgba(108,99,255,0.5);
+  --text-primary: #F0F0FF;
+  --text-muted:   #8888AA;
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --shadow:       0 8px 32px rgba(0,0,0,0.4);
+  --shadow-glow:  0 0 24px rgba(108,99,255,0.25);
+}
+
+/* ── Base ── */
+html, body, [data-testid="stAppViewContainer"] {
+  background: var(--bg-base) !important;
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text-primary) !important;
+}
+
+[data-testid="stSidebar"] {
+  background: var(--bg-surface) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+/* ── Hide default Streamlit chrome ── */
+#MainMenu, footer, header { visibility: hidden; }
+[data-testid="stDecoration"] { display: none; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+/* ── Headings ── */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: var(--text-primary) !important;
+}
+
+/* ── Streamlit widgets ── */
+[data-testid="stSelectbox"] > div,
+[data-testid="stRadio"] > div {
+  background: var(--bg-glass) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+[data-testid="stFileUploader"] {
+  background: var(--bg-glass) !important;
+  border: 2px dashed var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  transition: border-color 0.3s;
+}
+[data-testid="stFileUploader"]:hover {
+  border-color: var(--primary) !important;
+}
+
+/* ── Metric cards ── */
+[data-testid="metric-container"] {
+  background: var(--bg-glass) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 16px !important;
+  backdrop-filter: blur(10px);
+}
+
+/* ── Buttons ── */
+.stButton > button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(108,99,255,0.3) !important;
+}
+.stButton > button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(108,99,255,0.5) !important;
+}
+
+/* ── Tabs ── */
+[data-testid="stTabs"] [role="tab"] {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
+  transition: color 0.2s;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+  color: var(--primary) !important;
+  border-bottom: 2px solid var(--primary) !important;
+}
+
+/* ── Expander ── */
+[data-testid="stExpander"] {
+  background: var(--bg-glass) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* ── DataFrame ── */
+[data-testid="stDataFrame"] {
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+/* ── Progress bar ── */
+[data-testid="stProgress"] > div > div {
+  background: linear-gradient(90deg, var(--primary), var(--secondary)) !important;
+  border-radius: 4px !important;
+}
+
+/* ── Alerts ── */
+[data-testid="stAlert"] {
+  border-radius: var(--radius-md) !important;
+  border: none !important;
+}
+
+/* ── Sidebar nav items ── */
+[data-testid="stSidebarNav"] a {
+  border-radius: var(--radius-sm) !important;
+  transition: background 0.2s;
+}
+[data-testid="stSidebarNav"] a:hover {
+  background: var(--bg-glass) !important;
+}
