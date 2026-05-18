@@ -74,6 +74,20 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    # Team info
+    st.markdown("""
+    <div style="margin:20px 16px 0;padding:12px;background:#ffffff03;
+                border:1px solid #ffffff06;border-radius:8px">
+      <div style="font-size:9px;font-weight:600;letter-spacing:1.2px;
+                  text-transform:uppercase;color:#444460;margin-bottom:6px">Kelompok 8</div>
+      <div style="font-size:10px;color:#666680;line-height:1.8">
+        1. Pebi Heriansyah (G1A023039)<br>
+        2. Reffki Andrea Pratama (G1A023039)<br>
+        3. M. Farhan Dzakki (G1A023041)
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 # ── Route ─────────────────────────────────────────────────────────────────────
 if   "Home"      in page: from views.home      import render; render()
