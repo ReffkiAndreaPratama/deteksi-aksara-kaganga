@@ -1,6 +1,5 @@
 """
-app.py — Entry point GUI AksaraDetect (YOLOv8).
-Jalankan: streamlit run app.py  (dari folder src/)
+app.py — AksaraDetect GUI
 """
 
 import os, sys
@@ -10,7 +9,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="AksaraDetect",
-    page_icon="🔍",
+    page_icon="◈",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -18,76 +17,68 @@ st.set_page_config(
 from components.ui import inject_styles
 import config, utils
 
-# Pastikan semua folder output ada
 utils.ensure_dirs()
 inject_styles()
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("""
-    <div style="padding:20px 8px 8px">
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;
-                  background:linear-gradient(135deg,#6C63FF,#3ECFCF);
-                  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-                  background-clip:text;margin-bottom:4px">🔍 AksaraDetect</div>
-      <div style="font-size:11px;color:#8888AA;margin-bottom:20px">
-        YOLOv8 · Aksara Ulu Rejang
+    # Brand
+    st.markdown(f"""
+    <div style="padding:20px 16px 16px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:22px">◈</div>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;
+                      font-weight:700;color:#F5F5FF;letter-spacing:-0.3px">AksaraDetect</div>
+          <div style="font-size:10px;color:#555570;margin-top:1px">v{config.APP_VERSION}</div>
+        </div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div style="height:1px;background:linear-gradient(90deg,transparent,'
-                'rgba(108,99,255,0.4),transparent);margin-bottom:16px"></div>',
+    st.markdown('<div style="height:1px;background:#ffffff08;margin:0 16px 16px"></div>',
                 unsafe_allow_html=True)
 
+    # Nav
     page = st.radio(
-        "Navigation",
-        ["🏠  Home", "🔍  Detect", "📊  Analytics", "📋  History", "⚙️  Settings"],
+        "nav",
+        ["🏠  Home", "🔍  Detect", "📊  Analytics", "📈  Training", "📋  History", "⚙️  Settings"],
         label_visibility="collapsed",
     )
 
-    st.markdown('<div style="height:1px;background:linear-gradient(90deg,transparent,'
-                'rgba(108,99,255,0.4),transparent);margin:16px 0"></div>',
+    st.markdown('<div style="height:1px;background:#ffffff08;margin:16px 16px 14px"></div>',
                 unsafe_allow_html=True)
 
     # Status
     model_ok = os.path.isfile(config.MODEL_BEST_PATH)
-    yaml_ok  = os.path.isfile(config.DATA_YAML)
-    log      = utils.load_prediction_log()
-
-    st.markdown('<div style="font-size:11px;font-weight:600;letter-spacing:1px;'
-                'text-transform:uppercase;color:#8888AA;margin-bottom:10px">'
-                'System Status</div>', unsafe_allow_html=True)
+    log = utils.load_prediction_log()
 
     st.markdown(f"""
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;
-                  background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px">
-        <span style="font-size:12px;color:#C0C0D8">YOLOv8 Model</span>
-        <span style="font-size:11px;font-weight:600;
-                     color:{'#4CAF50' if model_ok else '#F44336'}">
-          {'● Ready' if model_ok else '○ Not trained'}
-        </span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;
-                  background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px">
-        <span style="font-size:12px;color:#C0C0D8">Dataset</span>
-        <span style="font-size:11px;font-weight:600;
-                     color:{'#4CAF50' if yaml_ok else '#F44336'}">
-          {'● 253 kelas' if yaml_ok else '○ Not found'}
-        </span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;
-                  background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px">
-        <span style="font-size:12px;color:#C0C0D8">Deteksi Log</span>
-        <span style="font-size:11px;font-weight:600;color:#6C63FF">{len(log)}</span>
+    <div style="margin:0 16px">
+      <div style="font-size:10px;font-weight:600;letter-spacing:1.2px;
+                  text-transform:uppercase;color:#444460;margin-bottom:10px">Status</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;align-items:center;
+                    padding:7px 10px;background:#ffffff04;border-radius:6px">
+          <span style="font-size:12px;color:#8888AA">Model</span>
+          <span style="font-size:11px;font-weight:600;
+                       color:{'#4CAF50' if model_ok else '#555570'}">
+            {'● loaded' if model_ok else '○ missing'}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;
+                    padding:7px 10px;background:#ffffff04;border-radius:6px">
+          <span style="font-size:12px;color:#8888AA">Detections</span>
+          <span style="font-size:11px;font-weight:600;color:#6C63FF">{len(log)}</span>
+        </div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
+
 # ── Route ─────────────────────────────────────────────────────────────────────
-if   "Home"      in page: from pages.home      import render; render()
-elif "Detect"    in page: from pages.detect    import render; render()
-elif "Analytics" in page: from pages.analytics import render; render()
-elif "History"   in page: from pages.history   import render; render()
-elif "Settings"  in page: from pages.settings  import render; render()
+if   "Home"      in page: from views.home      import render; render()
+elif "Detect"    in page: from views.detect     import render; render()
+elif "Analytics" in page: from views.analytics  import render; render()
+elif "Training"  in page: from views.training   import render; render()
+elif "History"   in page: from views.history    import render; render()
+elif "Settings"  in page: from views.settings   import render; render()
